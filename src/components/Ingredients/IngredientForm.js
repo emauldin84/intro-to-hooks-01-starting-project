@@ -9,7 +9,10 @@ const IngredientForm = React.memo(props => {
   
   const submitHandler = e => {
     e.preventDefault();
-    // ...
+    props.addIngredient({
+      title: inputTitle,
+      amount: inputAmount
+    })
   };
   
   const changeTitleHandler = e => {
@@ -19,7 +22,7 @@ const IngredientForm = React.memo(props => {
   const changeAmountHandler = e => {
     setInputAmount(e.target.value)
   }
-  
+
   console.log(inputTitle, inputAmount)
   
   return (
