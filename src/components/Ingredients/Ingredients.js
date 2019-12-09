@@ -7,13 +7,22 @@ import Search from './Search';
 const Ingredients = () => {
   const [ingredients, setIngredients] = useState([])
 
-  const addIngredientHandler = (ingredient) => {
+  const addIngredientHandler = ingredient => {
     setIngredients([
       ...ingredients,
       {
         id: Date.now(),
         ...ingredient
       }
+    ])
+  }
+  const removeIngredientHandler = id => {
+    let filteredIngredients = ingredients.filter(ingredient => {
+      return ingredient.id !== id
+    })
+
+    setIngredients([
+      ...filteredIngredients,
     ])
   }
 
@@ -23,7 +32,7 @@ const Ingredients = () => {
 
       <section>
         <Search />
-        <IngredientList ingredients={ingredients} removeItem={() => {}}/>
+        <IngredientList ingredients={ingredients} removeItem={removeIngredientHandler}/>
       </section>
     </div>
   );
