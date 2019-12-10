@@ -3,10 +3,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList'
 import Search from './Search';
+import ErrorModal from '../UI/ErrorModal'
 
 const Ingredients = () => {
   const [ingredients, setIngredients] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState()
+
   // useEffect(() => {
   //   fetch('https://react-hooks-starting-project.firebaseio.com/ingredients.json')
   //     .then(response => response.json())
@@ -63,11 +66,14 @@ const Ingredients = () => {
       setIngredients([
         ...filteredIngredients,
       ])
+    }).catch (error => {
+      setError(`Something went wrong. ${error.message}`)
     })
   }
 
   return (
     <div className="App">
+      {error && <ErrorModal>{error}</ErrorModal>}
       <IngredientForm addIngredient={addIngredientHandler} loading={isLoading}/>
 
       <section>
