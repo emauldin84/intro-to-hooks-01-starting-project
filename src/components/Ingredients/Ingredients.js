@@ -48,13 +48,17 @@ const Ingredients = () => {
     })
   }
   const removeIngredientHandler = id => {
-    let filteredIngredients = ingredients.filter(ingredient => {
-      return ingredient.id !== id
+    fetch(`https://react-hooks-starting-project.firebaseio.com/ingredients/${id}.json`,{
+      method: 'DELETE',
     })
-
-    setIngredients([
-      ...filteredIngredients,
-    ])
+    .then(response => {
+      let filteredIngredients = ingredients.filter(ingredient => {
+        return ingredient.id !== id
+      })
+      setIngredients([
+        ...filteredIngredients,
+      ])
+    })
   }
 
   return (
