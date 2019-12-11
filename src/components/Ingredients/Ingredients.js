@@ -50,11 +50,13 @@ const Ingredients = () => {
           ...ingredient
         }
       ])
+    }).catch (error => {
+      setError(`Something went wrong. ${error.message}`)
     })
   }
   const removeIngredientHandler = id => {
     setIsLoading(true)
-    fetch(`https://react-hooks-starting-project.firebaseio.com/ingredients/${id}.json`,{
+    fetch(`https://react-hooks-starting-project.firebaseio.com/ingredients/${id}.jsn`,{
       method: 'DELETE',
     })
     .then(response => {
@@ -67,13 +69,18 @@ const Ingredients = () => {
         ...filteredIngredients,
       ])
     }).catch (error => {
-      setError(`Something went wrong. ${error.message}`)
+      setError(`Something went wrong! ${error.message}`)
+      setIsLoading(false)
     })
+  }
+
+  const clearError = () => {
+    setError(null)
   }
 
   return (
     <div className="App">
-      {error && <ErrorModal>{error}</ErrorModal>}
+      {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
       <IngredientForm addIngredient={addIngredientHandler} loading={isLoading}/>
 
       <section>
